@@ -14,6 +14,9 @@ This example can be easily adjusted to compute different quantities, and filter 
 4. Type `./run <database name>`
 5. When the script is complete, you can view the `explore.html` file in a browser (check settings per the [cinema explorer](https://github.com/cinemascience/cinema_explorer) instructions if you have any problems.
 
+## Questions
+
+email `**cinema-dev@lanl.gov**`
 
 
 
