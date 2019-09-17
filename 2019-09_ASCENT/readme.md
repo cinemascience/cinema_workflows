@@ -8,12 +8,11 @@ This example can be easily adjusted to compute different quantities, and filter 
 
 ## To use this workflow:
 
-1. Clone this repository.
-2. Install `cinema` [command line tool](https://github.com/cinemascience/cinema_lib). Make sure to install numpy to activate the image-based options. You will know it's installed properly if command line options like `--image-entropy` show up when you type `cinema --help` after installing it.
-3. Using a shell or terminal window, clone this repository, and then `cd` into it.
-4. Copy a Cinema database created with ASCENT into this directory.
-5. Type `./run <database name>`
-6. When the script is complete, you can view the `explore.html` file in a browser (check settings per the [cinema explorer](https://github.com/cinemascience/cinema_explorer) instructions if you have any problems.
+1. Install `cinema` [command line tool](https://github.com/cinemascience/cinema_lib). Make sure to install numpy to activate the image-based options. You will know it's installed properly if command line options like `--image-entropy` show up when you type `cinema --help` after installing it.
+2. Using a shell or terminal window, clone this repository, and then `cd` into it.
+3. Copy a Cinema database created with ASCENT into this directory.
+4. Type `./run <database name>`
+5. When the script is complete, you can view the `explore.html` file in a browser (check settings per the [cinema explorer](https://github.com/cinemascience/cinema_explorer) instructions if you have any problems.
 
 
 
