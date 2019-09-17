@@ -16,7 +16,7 @@ This example can be easily adjusted to compute different quantities, and filter 
 
 ## Questions
 
-email `**cinema-dev@lanl.gov**`
+email **`cinema-dev@lanl.gov`**
 
 
 
