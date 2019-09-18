@@ -6,8 +6,8 @@ from cinstall.install import install
 
 dbs = [ 
         {  "path": "nyx.cdb", 
-           "selection" : { "image_unique_count"   : [251.5, 252.5],
-                           "image_shannon_entropy": [1.30, 1.35] }
+           "selection" : { "image_unique_count"   : [130.0, 137.0],
+                           "image_shannon_entropy": [2.0, 2.5] }
         }
       ]
 install.explorer( "cinstall/cinema.source",

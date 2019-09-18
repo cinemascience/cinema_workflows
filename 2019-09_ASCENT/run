@@ -1,5 +1,8 @@
 #!/bin/bash
 
+CINEMA=$CINEMA_PATH
+PYTHONPATH=$CINEMA_PYTHONPATH:$PYTHONPATH
+
 if [ "$1" == "" ]; then
     echo "Need name of Cinema database to process. Exiting ..."
     exit 0
@@ -8,28 +11,29 @@ fi
 CDB=$1
 
 # fix a bug in the ASCENT database output
-sed -i "" "s/ //g" $CDB/data.csv
+sed -i 's/ //g' $CDB/data.csv
 
 # pull the cinema install modules
-git clone git@github.com:cinemascience/cinema_install.git
+# git clone git@github.com:cinemascience/cinema_install.git
+git clone https://github.com/cinemascience/cinema_install.git 
 mv cinema_install/cinstall .
 rm -rf cinema_install
 
 # create greyscale images
 FILE=3
-echo cinema -d $CDB --image-grey $FILE
-cinema -d $CDB --image-grey $FILE 2>/dev/null
+echo $CINEMA -d $CDB --image-grey $FILE
+$CINEMA -d $CDB --image-grey $FILE 2>/dev/null
 ((GREYSCALE=FILE+1))
 
 # compute several quantities
-echo cinema -d $CDB --image-unique $GREYSCALE
-cinema -d $CDB --image-unique $GREYSCALE
+echo $CINEMA -d $CDB --image-unique $GREYSCALE
+$CINEMA -d $CDB --image-unique $GREYSCALE
 ((GREYSCALE=GREYSCALE+1))
-echo cinema -d $CDB --image-entropy $GREYSCALE
-cinema -d $CDB --image-entropy $GREYSCALE
+echo $CINEMA -d $CDB --image-entropy $GREYSCALE
+$CINEMA -d $CDB --image-entropy $GREYSCALE
 
 # fix a bug in the components
-sed -i '' '1 s/ /_/g' $CDB/data.csv
+sed -i '1 s/ /_/g' $CDB/data.csv
 
 # install a viewer 
 ./install

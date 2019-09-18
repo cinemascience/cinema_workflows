@@ -11,8 +11,10 @@ This example can be easily adjusted to compute different quantities, and filter 
 1. Install `cinema` [command line tool](https://github.com/cinemascience/cinema_lib). Make sure to install numpy to activate the image-based options. You will know it's installed properly if command line options like `--image-entropy` show up when you type `cinema --help` after installing it.
 2. Using a shell or terminal window, clone this repository, and then `cd` into it.
 3. Copy a Cinema database created with ASCENT into this directory.
-4. Type `./run <database name>`
-5. When the script is complete, you can view the `explore.html` file in a browser (check settings per the [cinema explorer](https://github.com/cinemascience/cinema_explorer) instructions if you have any problems.
+4. Set environment variables CINEMA_PATH (location of cinema script) and CINEMA_PYTHONPATH (location of cinema_lib module)
+5. Edit the `install` script to have **selection** ranges that are appropriate for your dataset.
+6. Type `./run <database name>`
+7. When the script is complete, you can view the `explore.html` file in a browser (check settings per the [cinema explorer](https://github.com/cinemascience/cinema_explorer) instructions if you have any problems.
 
 ## Questions
 
