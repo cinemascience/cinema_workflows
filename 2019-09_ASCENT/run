@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CINEMA=$CINEMA_PATH
+CINEMA=$CINEMAPATH
 PYTHONPATH=$CINEMA_PYTHONPATH:$PYTHONPATH
 
 if [ "$1" == "" ]; then
@@ -9,6 +9,21 @@ if [ "$1" == "" ]; then
 fi
 
 CDB=$1
+DIRNAME=`dirname $CDB`
+CDB=`basename $CDB`
+INSTALL=`pwd`/install
+pushd $DIRNAME >/dev/null
+DIRNAME=`pwd`
+FULLPATH=$DIRNAME/$CDB
+
+VERBOSE=false
+if [ "$VERBOSE" = true ]; then
+    echo "dirname : $DIRNAME"
+    echo "fullpath: $FULLPATH"
+    echo "cdb     : $CDB"
+    echo "install : $INSTALL"
+    echo "cinema  : $CINEMA"
+fi
 
 # fix a bug in the ASCENT database output
 sed -i 's/ //g' $CDB/data.csv
@@ -36,8 +51,10 @@ $CINEMA -d $CDB --image-entropy $GREYSCALE
 sed -i '1 s/ /_/g' $CDB/data.csv
 
 # install a viewer 
-./install
+$INSTALL $CDB
 
 # clean up
 rm -rf cinstall
 
+# return to the original place
+popd

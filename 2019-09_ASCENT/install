@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
-
 from cinstall.install import install 
+import sys
 
+
+if ( len(sys.argv) == 1 ):
+    print("ERROR: need at least one arg (name of Cinema database)")
+    print("exiting ...")
+    exit(0)
+
+dbpath = sys.argv[1]
+print("database: {}".format(dbpath))
 
 dbs = [ 
-        {  "path": "nyx.cdb", 
+        {  "path": dbpath, 
            "selection" : { "image_unique_count"   : [130.0, 137.0],
                            "image_shannon_entropy": [2.0, 2.5] }
         }
