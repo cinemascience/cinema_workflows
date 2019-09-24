@@ -12,6 +12,14 @@ CDB=$1
 DIRNAME=`dirname $CDB`
 CDB=`basename $CDB`
 INSTALL=`pwd`/install
+# pull the cinema install modules @ git commit id
+wget https://github.com/cinemascience/cinema_install/archive/cec4f8d5fba56d630e62307ded8a336e48b6d169.zip
+unzip cec4f8d5fba56d630e62307ded8a336e48b6d169.zip
+mv cinema_install-cec4f8d5fba56d630e62307ded8a336e48b6d169/cinstall .
+rm -rf cinema_install-cec4f8d5fba56d630e62307ded8a336e48b6d169/ cec4f8d5fba56d630e62307ded8a336e48b6d169.zip
+export PYTHONPATH=$PYTHONPATH:`pwd`
+
+# cd to data dir to transmogrify database
 pushd $DIRNAME >/dev/null
 DIRNAME=`pwd`
 FULLPATH=$DIRNAME/$CDB
@@ -28,11 +36,6 @@ fi
 # fix a bug in the ASCENT database output
 sed -i 's/ //g' $CDB/data.csv
 
-# pull the cinema install modules
-# git clone git@github.com:cinemascience/cinema_install.git
-git clone https://github.com/cinemascience/cinema_install.git 
-mv cinema_install/cinstall .
-rm -rf cinema_install
 
 # create greyscale images
 FILE=3
@@ -50,11 +53,12 @@ $CINEMA -d $CDB --image-entropy $GREYSCALE
 # fix a bug in the components
 sed -i '1 s/ /_/g' $CDB/data.csv
 
+# return to cinema_workflows
+popd
+
 # install a viewer 
 $INSTALL $CDB
 
 # clean up
 rm -rf cinstall
 
-# return to the original place
-popd
