@@ -4,16 +4,22 @@ from cinstall.install import install
 import sys
 
 
-if ( len(sys.argv) == 1 ):
-    print("ERROR: need at least one arg (name of Cinema database)")
+if ( len(sys.argv) == 2 ):
+    print("ERROR: need 2 args (path of 2 Cinema databases)")
     print("exiting ...")
     exit(0)
 
-dbpath = sys.argv[1]
-print("database: {}".format(dbpath))
+dbpath1 = sys.argv[1]
+dbpath2 = sys.argv[2]
+print("database1: {}".format(dbpath1))
+print("database2: {}".format(dbpath2))
 
 dbs = [ 
-        {  "path": dbpath, 
+        {  "path": dbpath1, 
+           "selection" : { "image_unique_count"   : [130.0, 137.0],
+                           "image_shannon_entropy": [2.0, 2.5] }
+        },
+        {  "path": dbpath2, 
            "selection" : { "image_unique_count"   : [130.0, 137.0],
                            "image_shannon_entropy": [2.0, 2.5] }
         }

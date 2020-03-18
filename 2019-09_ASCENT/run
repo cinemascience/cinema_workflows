@@ -3,14 +3,17 @@
 CINEMA=$CINEMAPATH
 PYTHONPATH=$CINEMA_PYTHONPATH:$PYTHONPATH
 
-if [ "$1" == "" ]; then
-    echo "Need name of Cinema database to process. Exiting ..."
+if [ "$2" == "" ]; then
+    echo "Need name of 2 Cinema databases to process. Exiting ..."
     exit 0
 fi
 
-CDB=$1
-DIRNAME=`dirname $CDB`
-CDB=`basename $CDB`
+CDB1=$1
+CDB2=$2
+DIRNAME1=`dirname $CDB1`
+DIRNAME2=`dirname $CDB2`
+CDB1=`basename $CDB1`
+CDB2=`basename $CDB2`
 INSTALL=`pwd`/install
 # pull the cinema install modules @ git commit id
 wget https://github.com/cinemascience/cinema_install/archive/cec4f8d5fba56d630e62307ded8a336e48b6d169.zip
@@ -19,45 +22,82 @@ mv cinema_install-cec4f8d5fba56d630e62307ded8a336e48b6d169/cinstall .
 rm -rf cinema_install-cec4f8d5fba56d630e62307ded8a336e48b6d169/ cec4f8d5fba56d630e62307ded8a336e48b6d169.zip
 export PYTHONPATH=$PYTHONPATH:`pwd`
 
-# cd to data dir to transmogrify database
-pushd $DIRNAME >/dev/null
-DIRNAME=`pwd`
-FULLPATH=$DIRNAME/$CDB
+# cd to data dir to transmogrify database1
+pushd $DIRNAME1 >/dev/null
+DIRNAME1=`pwd`
+FULLPATH1=$DIRNAME1/$CDB1
 
 VERBOSE=false
 if [ "$VERBOSE" = true ]; then
-    echo "dirname : $DIRNAME"
-    echo "fullpath: $FULLPATH"
-    echo "cdb     : $CDB"
+    echo "dirname : $DIRNAME1"
+    echo "fullpath: $FULLPATH1"
+    echo "cdb     : $CDB1"
     echo "install : $INSTALL"
     echo "cinema  : $CINEMA"
 fi
 
 # fix a bug in the ASCENT database output
-sed -i 's/ //g' $CDB/data.csv
+sed -i 's/ //g' $CDB1/data.csv
 
 
 # create greyscale images
 FILE=3
-echo $CINEMA -d $CDB --image-grey $FILE
-$CINEMA -d $CDB --image-grey $FILE 2>/dev/null
+echo $CINEMA -d $CDB1 --image-grey $FILE
+$CINEMA -d $CDB1 --image-grey $FILE 2>/dev/null
 ((GREYSCALE=FILE+1))
 
 # compute several quantities
-echo $CINEMA -d $CDB --image-unique $GREYSCALE
-$CINEMA -d $CDB --image-unique $GREYSCALE
+echo $CINEMA -d $CDB1 --image-unique $GREYSCALE
+$CINEMA -d $CDB1 --image-unique $GREYSCALE
 ((GREYSCALE=GREYSCALE+1))
-echo $CINEMA -d $CDB --image-entropy $GREYSCALE
-$CINEMA -d $CDB --image-entropy $GREYSCALE
+echo $CINEMA -d $CDB1 --image-entropy $GREYSCALE
+$CINEMA -d $CDB1 --image-entropy $GREYSCALE
 
 # fix a bug in the components
-sed -i '1 s/ /_/g' $CDB/data.csv
+sed -i '1 s/ /_/g' $CDB1/data.csv
+
+# return to cinema_workflows
+popd
+
+# cd to data dir to transmogrify database 2
+pushd $DIRNAME2 >/dev/null
+DIRNAME1=`pwd`
+FULLPATH1=$DIRNAME2/$CDB2
+
+VERBOSE=false
+if [ "$VERBOSE" = true ]; then
+    echo "dirname : $DIRNAME2"
+    echo "fullpath: $FULLPATH2"
+    echo "cdb     : $CDB2"
+    echo "install : $INSTALL"
+    echo "cinema  : $CINEMA"
+fi
+
+# fix a bug in the ASCENT database output
+sed -i 's/ //g' $CDB2/data.csv
+
+
+# create greyscale images
+FILE=3
+echo $CINEMA -d $CDB2 --image-grey $FILE
+$CINEMA -d $CDB2 --image-grey $FILE 2>/dev/null
+((GREYSCALE=FILE+1))
+
+# compute several quantities
+echo $CINEMA -d $CDB2 --image-unique $GREYSCALE
+$CINEMA -d $CDB2 --image-unique $GREYSCALE
+((GREYSCALE=GREYSCALE+1))
+echo $CINEMA -d $CDB2 --image-entropy $GREYSCALE
+$CINEMA -d $CDB2 --image-entropy $GREYSCALE
+
+# fix a bug in the components
+sed -i '1 s/ /_/g' $CDB2/data.csv
 
 # return to cinema_workflows
 popd
 
 # install a viewer 
-$INSTALL $CDB
+$INSTALL $CDB1 $CDB2
 
 # clean up
 rm -rf cinstall
