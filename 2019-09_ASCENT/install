@@ -20,7 +20,7 @@ dbs = [
                            "image_shannon_entropy": [2.0, 2.5] }
         },
         {  "path": dbpath2, 
-           "selection" : { "image_unique_count"   : [130.0, 137.0],
+           "selection" : { "image_unique_count"   : [600, 800],
                            "image_shannon_entropy": [2.0, 2.5] }
         }
       ]
