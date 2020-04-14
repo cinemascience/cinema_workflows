@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+from cinstall.install import install 
+import sys
+
+
+if ( len(sys.argv) == 1 ):
+    print("ERROR: need at least one arg (name of Cinema database)")
+    print("exiting ...")
+    exit(0)
+
+dbpath = sys.argv[1]
+print("database: {}".format(dbpath))
+
+dbs = [ 
+        {  "path": dbpath }
+      ]
+#
+# A selection can be made in the cinema explorer viewer by including
+# the following 'selection' clause in your dbs definition, assuming
+# you include valide ranges for your results
+#
+#dbs = [ 
+#        {  "path": dbpath, 
+#           "selection" : { "image_unique_count"   : [130.0, 137.0],
+#                           "image_shannon_entropy": [2.0, 2.5] }
+#        }
+#      ]
+#
+install.explorer( "cinstall/cinema.source",
+                  ".", 
+                  "explore.html",
+                  dbs)
+
+
